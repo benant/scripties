@@ -7,8 +7,8 @@
 	 * @author 한근희
 	 */
 
-	const _search_ = ''; // search key word. like site name
-	const _siteurl_ = ''; // site url like https://www.domain.com/
+	const _search_ = ''; // write search key word. like site name
+	const _siteurl_ = ''; // write site url like https://www.domain.com/
 
 	/*! jQuery v3.6.0 -ajax,-ajax/jsonp,-ajax/load,-ajax/script,-ajax/var/location,-ajax/var/nonce,-ajax/var/rquery,-ajax/xhr,-manipulation/_evalUrl,-deprecated/ajax-event-alias,-effects,-effects/Tween,-effects/animatedSelector | (c) OpenJS Foundation and other contributors | jquery.org/license */
 	if(typeof jQuery == typeof undefined) {
