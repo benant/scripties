@@ -38,11 +38,11 @@
 		let $q = $query;
 		site_url = site_url ? site_url : _siteurl_;
 		if($q.val()!=_search_) { 
-			window.location.href = search_url;  
+			setTimeout(function(){window.location.href = search_url;}, Math.random()*1500);
 		} else {
 			let $link = $('a[href="'+site_url+'"]');
 			if($link.length>0) {
-				alert('link found');
+				// alert('link found');
 			} else {
 				$link = $next;
 				// alert('link not found');
