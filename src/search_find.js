@@ -8,6 +8,10 @@
 	 */
 
 
+	const _data_set_ = [
+		['에스튜브', 'https://www.stube.co.kr/'], 
+	]
+
 	const _search_ = ''; // write search key word. like site name
 	const _siteurl_ = ''; // write site url like https://www.domain.com/
 
