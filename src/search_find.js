@@ -40,7 +40,9 @@
 		if($q.val()!=_search_) { 
 			setTimeout(function(){window.location.href = search_url;}, Math.random()*1500);
 		} else {
-			let $link = $('a[href="'+site_url+'"]');
+			const http_site_url = site_url.replace('https:', 'http:');
+			const https_site_url = site_url.replace('http:', 'https:');
+			let $link = $('a[href="'+http_site_url+'"], a[href="'+https_site_url+'"]');
 			if($link.length>0) {
 				// alert('link found');
 			} else {
