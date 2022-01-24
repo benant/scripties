@@ -31,14 +31,14 @@
 		setTimeout(function(){
 			$(document).scrollTop($link.offset().top - 80);
 			$link.get(mt_rand(0, $link.length-1)).click();
-		}, Math.random()*1500);
+		}, Math.random()*10000);
 	}
 
 	const fn_search = function($query, $next, search_url, site_url) {
 		let $q = $query;
 		site_url = site_url ? site_url : _siteurl_;
 		if($q.val()!=_search_) { 
-			setTimeout(function(){window.location.href = search_url;}, Math.random()*1500);
+			setTimeout(function(){window.location.href = search_url;}, Math.random()*10000); // 로봇이 아니라고 만들려면 최대 10초 최소 1초이상은 기다리게 합시다.
 		} else {
 			const http_site_url = site_url.replace('https:', 'http:');
 			const https_site_url = site_url.replace('http:', 'https:');
