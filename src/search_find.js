@@ -7,6 +7,7 @@
 	 * @author 한근희
 	 */
 
+
 	const _search_ = ''; // write search key word. like site name
 	const _siteurl_ = ''; // write site url like https://www.domain.com/
 
@@ -21,6 +22,7 @@
 	}
 
 	const fn_display_link = function($link) {
+		if (!$link || !$link.length) return false;
 		$link.css({'color':'red', 'background':'blue', 'font-weight':'blod', 'font-size':'20px'});
 		setTimeout(function(){
 			$(document).scrollTop($link.offset().top - 80);
@@ -28,12 +30,13 @@
 		}, Math.random()*1500);
 	}
 
-	const fn_search = function($query, $next, search_url) {
+	const fn_search = function($query, $next, search_url, site_url) {
 		let $q = $query;
+		site_url = site_url ? site_url : _siteurl_;
 		if($q.val()!=_search_) { 
 			window.location.href = search_url;  
 		} else {
-			let $link = $('a[href="'+_siteurl_+'"]');
+			let $link = $('a[href="'+site_url+'"]');
 			if($link.length>0) {
 				alert('link found');
 			} else {
@@ -54,11 +57,14 @@
 		fn_search($('[name="q"]'), $('a.sb_pagN'), 'https://www.bing.com/search?q='+_search_+'&form=QBLH&sp=-1&pq='+_search_+'&sc=0-4&qs=n&sk=&cvid=15F4B1CEC4D04A3DBBD3BD872FEEE60C');
 	}
 	if(window.location.href.indexOf('naver.com')>-1) {
-		fn_search($('[name="query"]'), $('a.btn_next'), 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+_search_);
+		fn_search($('[name="query"]'), $('.sp_ntotal a.api_more , a.btn_next'), 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+_search_);
 	}
 	if(window.location.href.indexOf('daum.net')>-1) {
-		fn_search($('[name="q"]'), $('#webWrapExtend a.expender.more, a.btn_next'), 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_); // search web
-		// fn_search($('[name="q"]'), $('#siteWrapExtend a.expender.more, a.btn_next'), 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_); // search site
+		fn_search($('[name="q"]'), $('#webWrapExtend a.expender.more, a.btn_next'), 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_, _siteurl_.replace(/\/$/,'')); // search web
+		// fn_search($('[name="q"]'), $('#siteWrapExtend a.expender.more, a.btn_next'), 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_, _siteurl_.replace(/\/$/,'')); // search site
+	}
+	if(window.location.href.indexOf('zum.com')>-1) {
+		fn_search($('.search_bar_inner input[type="text"], [name="query"]'), $('#documentSc p.section_more a, a.next'), 'https://search.zum.com/search.zum?method=uni&option=accu&rd=1&query='+_search_+'&qm=f_typing.top', _siteurl_.replace(/\/$/,''));
 	}
 
 })();
