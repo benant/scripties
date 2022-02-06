@@ -40,9 +40,12 @@
 		if($q.val()!=_search_) { 
 			setTimeout(function(){window.location.href = search_url;}, Math.random()*10000); // 로봇이 아니라고 만들려면 최대 10초 최소 1초이상은 기다리게 합시다.
 		} else {
-			const http_site_url = site_url.replace('https:', 'http:');
-			const https_site_url = site_url.replace('http:', 'https:');
-			let $link = $('a[href="'+http_site_url+'"], a[href="'+https_site_url+'"]');
+			site_url = site_url.replace(/\/$/,''); // 링크끝 "/" 가 있는것과 없는 것으로 검색합니다.
+			const http_site_url1 = site_url.replace('https:', 'http:');
+			const https_site_url1 = site_url.replace('http:', 'https:');
+			const http_site_url2 = site_url.replace('https:', 'http:')+'/';
+			const https_site_url2 = site_url.replace('http:', 'https:')+'/';
+			let $link = $('a[href="'+http_site_url1+'"], a[href="'+http_site_url2+'"], a[href="'+https_site_url1+'"], a[href="'+https_site_url2+'"]');
 			if($link.length>0) {
 				// alert('link found');
 			} else {
@@ -66,11 +69,11 @@
 		fn_search($('[name="query"]'), $('.sp_ntotal a.api_more , a.btn_next'), 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+_search_);
 	}
 	if(window.location.href.indexOf('daum.net')>-1) {
-		fn_search($('[name="q"]'), $('#webWrapExtend a.expender.more, a.btn_next'), 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_, _siteurl_.replace(/\/$/,'')); // search web
+		fn_search($('[name="q"]'), $('#webWrapExtend a.expender.more, a.btn_next'), 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_); // search web
 		// fn_search($('[name="q"]'), $('#siteWrapExtend a.expender.more, a.btn_next'), 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_, _siteurl_.replace(/\/$/,'')); // search site
 	}
 	if(window.location.href.indexOf('zum.com')>-1) {
-		fn_search($('.search_bar_inner input[type="text"], [name="query"]'), $('#documentSc p.section_more a, a.next'), 'https://search.zum.com/search.zum?method=uni&option=accu&rd=1&query='+_search_+'&qm=f_typing.top', _siteurl_.replace(/\/$/,''));
+		fn_search($('.search_bar_inner input[type="text"], [name="query"]'), $('#documentSc p.section_more a, a.next'), 'https://search.zum.com/search.zum?method=uni&option=accu&rd=1&query='+_search_+'&qm=f_typing.top');
 	}
 
 })();
