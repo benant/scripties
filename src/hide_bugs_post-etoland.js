@@ -3,7 +3,7 @@
  * 평온한 여가를 위하여...
  */
 if(window.location.href.indexOf('etoland.co.kr')>-1 && window.location.href.indexOf('bo_table=sisabbs')>-1 ) {
-    const bugs_id = ['noheater','gusldia33','oxidezero','akia0607']; // 회원아이디.. 작성글보기에가면 아이디 표시됨.
+    const bugs_id = ['noheater','gusldia33','oxidezero','akia0607','dayhat']; // 회원아이디.. 작성글보기에가면 아이디 표시됨.
     const auto_click_nogood = true;
     
 	if(typeof jQuery == typeof undefined) {
