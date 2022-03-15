@@ -4,7 +4,7 @@
  * @todo 벌레 등록을 쉽게 할 수 있게 버튼 추가하기
  */
  if(window.location.href.indexOf('etoland.co.kr')>-1 && window.location.href.indexOf('bo_table=sisabbs')>-1 ) {
-    const bugs_id = ['noheater','gusldia33','oxidezero','akia0607','dayhat','junboon87','digi784']; // 벌레 아이디
+    const bugs_id = ['noheater','gusldia33','oxidezero','akia0607','dayhat','junboon87','digi784','pdpop12']; // 벌레 아이디
     const auto_click_nogood = true;
     
 	if(typeof jQuery == typeof undefined) {
@@ -28,6 +28,7 @@
             if($comment.length>0) {
                 const $parent = $comment.parent();
                 $parent.find(target).addClass('bugs_post on').attr('style', on_style);
+                $parent.find('img').hide();
                 // 반대 버튼 클릭
                 if(auto_click_nogood) {
                     $parent.find('a').each(function(){
