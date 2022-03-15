@@ -1,9 +1,10 @@
 /**
- * 이토랜드 사이트에 벌래 글 숨기기
+ * 이토랜드 사이트에 벌레 글 숨기기
  * 평온한 여가를 위하여...
+ * @todo 벌레 등록을 쉽게 할 수 있게 버튼 추가하기
  */
-if(window.location.href.indexOf('etoland.co.kr')>-1 && window.location.href.indexOf('bo_table=sisabbs')>-1 ) {
-    const bugs_id = ['noheater','gusldia33','oxidezero','akia0607','dayhat']; // 회원아이디.. 작성글보기에가면 아이디 표시됨.
+ if(window.location.href.indexOf('etoland.co.kr')>-1 && window.location.href.indexOf('bo_table=sisabbs')>-1 ) {
+    const bugs_id = ['noheater','gusldia33','oxidezero','akia0607','dayhat','junboon87','digi784']; // 벌레 아이디
     const auto_click_nogood = true;
     
 	if(typeof jQuery == typeof undefined) {
@@ -51,7 +52,7 @@ if(window.location.href.indexOf('etoland.co.kr')>-1 && window.location.href.inde
 
     $('body')
     .append('<style>.bugs_post.on {'+on_style+'} </style>')
-    .append('<div id="view_bugs_post" style="cursor:pointer; position: fixed; background: rgba(100, 0, 0, 0.5); color: rgb(255, 255, 255); bottom: 10px; right: 10px; font-size: 1rem; padding: 1rem;">벌래글 보기/숨기기</div>');
+    .append('<div id="view_bugs_post" style="cursor:pointer; position: fixed; background: rgba(100, 0, 0, 0.5); color: rgb(255, 255, 255); bottom: 10px; right: 10px; font-size: 1rem; padding: 1rem;">벌레글 보기/숨기기</div>');
     $('#view_bugs_post').on('click', function(){
         $('.bugs_post').toggleClass('on').each(function(){
             if($(this).hasClass('on')) {
