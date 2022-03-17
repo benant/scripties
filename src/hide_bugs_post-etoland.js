@@ -1,8 +1,10 @@
 /**
  * 이토랜드 사이트에 벌레 글 숨기기
  * 평온한 여가를 위하여...
+ * && window.location.href.indexOf('bo_table=sisabbs')>-1 정치게시판만 적용시
+ * @todo 반대버튼 자동 클릭하기... 흠... 왜? ajax가 안되지?? 졸리다 자자.
  */
- if(window.location.href.indexOf('etoland.co.kr')>-1 && window.location.href.indexOf('bo_table=sisabbs')>-1 ) {
+ if(window.location.href.indexOf('etoland.co.kr')>-1  ) {
     const auto_click_nogood = false;
     
 	if(typeof jQuery == typeof undefined) {
