@@ -51,8 +51,8 @@
 
 
     let bg_color = $('.saving_mode_button:eq(0)').text()=='다크모드' ? '#fff' : '#000';
-    const on_style = 'color: '+bg_color+' !important;background: '+bg_color+' !important';
-    const off_style = 'color: auto;background: auto';
+    const hide_style = 'color: '+bg_color+' !important;background: '+bg_color+' !important';
+    const show_style = 'color: auto;background: auto';
     const target = 'td,a,span,div';
     const storage_name = 'eto_bugs';
     const auto_click_nogood = false; // 자동 반대 클리
@@ -63,12 +63,14 @@
             if(this.tagName=='IMG') {
                 $(this).show();
             } else {
-                $(this).attr('style', off_style);
+                $(this).attr('style', show_style);
             }
         });
         const eto_bugs = JSON.parse(localStorage.getItem(storage_name)||'[]');
+        // console.log('eto_bugs:', eto_bugs);
         const eto_bugs_shared = JSON.parse(localStorage.getItem('eto_bugs_shared')||'[]');
         const bugs_id = eto_bugs.concat(eto_bugs_shared);
+        // console.log('bugs_id:',bugs_id);
         $('.member').each(function(){
             let $memberlink = $(this).parent('a');
             if(!$memberlink || !$memberlink.attr('onclick')) { return ; }
@@ -78,13 +80,14 @@
                 const $comment = $(this).closest('.comment_title');
                 if($comment.length>0) {
                     const $parent = $comment.parent();
-                    $parent.find(target).addClass('bugs_post on').attr('style', on_style);
+                    $parent.find(target).addClass('bugs_post on').attr('style', hide_style);
                     $parent.find('img').addClass('bugs_post on').hide();
                     // 반대 버튼 클릭
                     // 반대/취소가 토글방식이라 계속 호출시 반대/취소가 반복되고 있음. 
                     // @todo 반해했는지 안했는지 확인해야 함.
                     // 작동은 잘 됨.
                     // if(auto_click_nogood) {
+                    //     let _alert_old_ = alert;
                     //     $parent.find('a').each(function(){
                     //         const s = $(this).text();
                     //         if(s=='반대') { 
@@ -98,38 +101,66 @@
                     //             }
                     //         }
                     //     });
+                    //     alert = _alert_old_;
                     // }
                 } else {
-                    $(this).closest('tr,li').find(target).addClass('bugs_post on').attr('style', on_style);
+                    $(this).closest('tr,li').find(target).addClass('bugs_post on').attr('style', hide_style);
                 }
             }
         });
     }
 
-    let _alert_old_ = alert;
+    // 버그 글 숨기기
     hide_bug_posts();
-    alert = _alert_old_;
+    
 
     $('body')
-    .append('<style>.bugs_post.on {'+on_style+'} </style>')
-    .append('<div id="view_bugs_post" style="cursor:pointer; position: fixed; background: rgba(100, 0, 0, 0.5); color: rgb(255, 255, 255); bottom: 10px; right: 10px; font-size: 1rem; padding: 1rem;">벌레글 보기/숨기기</div>');
+    .append('<style>.bugs_post.on {'+hide_style+'} </style>')
+    // .append('<div id="view_bugs_post" style="cursor:pointer; position: fixed; background: rgba(100, 0, 0, 0.5); color: rgb(255, 255, 255); bottom: 10px; right: 10px; font-size: 1rem; padding: 1rem;">벌레글 보기/숨기기</div>');
+    .append('<div style="position: fixed; background: rgba(100, 0, 0, 0.5); color: rgb(255, 255, 255); bottom: 10px; right: 10px; font-size: 1rem; padding: 1rem;text-align:right;z-index:2000">\
+        <style>\
+            .icon.post{content:url(https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/eye-slash-fill.svg)}\
+            .icon.post.show{content:url(https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/eye-fill.svg)}\
+        </style>\
+        <div style="text-align: left;color: #eee;;display:none"><h2>버그 아이디 목록 <button id="btn-save-bug-list" style="float:right">저장</button></h2><textarea id="box-bugs_list" style="border:1px solid white;background:transparent !important;width:300px;height:100px;margin-bottom: 1rem;"></textarea></div>\
+        <img id="view_bugs_post" class="icon post" src="https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/eye-fill.svg" align="absmiddle" alt="벌레글 보기/숨기기" title="벌레글 보기/숨기기"  style="cursor:pointer; width: 32px;height: 32px;background: #FFF;border-radius: 50%;padding:2px">\
+        <img id="view_bugs_list" class="icon bug" src="https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/bug-fill.svg" align="absmiddle" alt="벌레 아이디 목록" title="벌레 아이디 목록" style="cursor:pointer; width: 32px;height: 32px;background: #FFF;border-radius: 50%;padding:2px">\
+    </div>');
+
+    $('#btn-save-bug-list').on('click', function(){
+        let bugs = $('#box-bugs_list').val()||'';
+        bugs = bugs ? bugs.split(',') : [];
+        bugs = JSON.stringify(array_unique(bugs));
+        // console.log('bugs:',bugs);
+        localStorage.setItem(storage_name, bugs);
+        hide_bug_posts();
+    })
+    $('#view_bugs_list').on('click', function(){
+        let bugs = localStorage.getItem(storage_name);
+        // console.log(bugs);
+        bugs = bugs ? JSON.parse(bugs) : [];
+        $('#box-bugs_list').text(bugs.join(',')).parent().toggle();
+    });
     $('#view_bugs_post').on('click', function(){
-        $('.bugs_post').toggleClass('on').each(function(){
-            if(this.tagName=='IMG') {
-                if($(this).hasClass('on')) {
+        if($(this).hasClass('show')) { // 보여주고 있었다면 숨기기
+            $(this).removeClass('show');
+            $('.bugs_post').each(function(){
+                if(this.tagName=='IMG') {
                     $(this).hide();
                 } else {
+                    $(this).attr('style', hide_style);
+                }
+            });
+        } else { // 숨기고 있었다면 보여주기
+            $(this).addClass('show');
+            $('.bugs_post').each(function(){
+                if(this.tagName=='IMG') {
                     $(this).show();
-                }
-            } else {
-                if($(this).hasClass('on')) {
-                    $(this).attr('style', on_style);
                 } else {
-                    $(this).attr('style', off_style);
+                    $(this).attr('style', show_style);
                 }
-            }
-        });
-
+            });
+        }
     });
 
     function addNameMenu(t) {
@@ -154,7 +185,10 @@
                 bug_id = table.match(/me_recv_mb_id=(.*?)'/);
                 bug_id = bug_id ? bug_id[1] : null;
             }
-            $nameMenu.find('tbody').append('<tr id="box-toggle-bug" height="19"><td id="sideViewRow_toggle_bug" style="text-align:left;">&nbsp;<font color="gray">·</font>&nbsp;<span style="color: #A0A0A0;  font-family: 돋움; font-size: 11px;"><a href="#" id="btn-toggle-bug" data-userid="'+bug_id+'"><img src="https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/bug-fill.svg" align="absmiddle" style="width:16px;height:16px;background: #FFF;border-radius: 50%;padding:2px"> 벌레 등록/삭제</a></span></td></tr>');
+            $nameMenu.find('tbody')
+            .append('<tr id="box-toggle-bug" height="19"><td id="sideViewRow_toggle_bug" style="text-align:left;">&nbsp;<font color="gray">·</font>&nbsp;<span style="color: #A0A0A0;  font-family: 돋움; font-size: 11px;"><a href="#" id="btn-toggle-bug" data-userid="'+bug_id+'"><img src="https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/bug-fill.svg" align="absmiddle" style="width:16px;height:16px;background: #FFF;border-radius: 50%;padding:2px"> 벌레 등록/삭제</a></span></td></tr>')
+            .append('<tr id="box-toggle-bug" height="19"><td id="sideViewRow_view_profile" style="text-align:left;">&nbsp;<font color="gray">·</font>&nbsp;<span style="color: #A0A0A0;  font-family: 돋움; font-size: 11px;"><a href="http://www.etoland.co.kr/bbs/profile.php?mb_id='+bug_id+'" id="btn-view-profile" target="_blank"><img src="https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/file-earmark-person.svg" align="absmiddle" style="width:16px;height:16px;background: #FFF;border-radius: 50%;padding:2px"> 회원프로필</a></span></td></tr>')
+            ;
             // 이름 기능 팝업창 크기 늘림 110px -> 126px(8rem)
             $('#nameContextMenu>table').css('width', '8rem');
         }
@@ -175,6 +209,7 @@
             }
         }
         let bugs = JSON.parse(localStorage.getItem(storage_name) || "[]");
+        // console.log(bugs);
         const i = bugs.indexOf(bug_id);
         if(i<0) {
             bugs.push(bug_id);
