@@ -122,7 +122,7 @@
             .icon.post{content:url(https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/eye-slash-fill.svg)}\
             .icon.post.show{content:url(https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/eye-fill.svg)}\
         </style>\
-        <div style="text-align: left;color: #eee;;display:none"><h2>버그 아이디 목록 <button id="btn-save-bug-list" style="float:right">저장</button></h2><textarea id="box-bugs_list" style="border:1px solid white;background:transparent !important;width:300px;height:100px;margin-bottom: 1rem;"></textarea></div>\
+        <div style="text-align: left;color: #eee;;display:none"><h2>벌레 아이디 목록 <button id="btn-save-bug-list" style="float:right">저장</button></h2><textarea id="box-bugs_list" style="border:1px solid white;background:transparent !important;width:300px;height:100px;margin-bottom: 1rem;"></textarea></div>\
         <img id="view_bugs_post" class="icon post" src="https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/eye-fill.svg" align="absmiddle" alt="벌레글 보기/숨기기" title="벌레글 보기/숨기기"  style="cursor:pointer; width: 32px;height: 32px;background: #FFF;border-radius: 50%;padding:2px">\
         <img id="view_bugs_list" class="icon bug" src="https://cdn.jsdelivr.net/gh/twbs/icons@main/icons/bug-fill.svg" align="absmiddle" alt="벌레 아이디 목록" title="벌레 아이디 목록" style="cursor:pointer; width: 32px;height: 32px;background: #FFF;border-radius: 50%;padding:2px">\
     </div>');
