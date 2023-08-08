@@ -74,8 +74,8 @@
         $('.member').each(function(){
             let $memberlink = $(this).parent('a');
             if(!$memberlink || !$memberlink.attr('onclick')) { return ; }
-            let userid = ($memberlink.attr('onclick')).match(/showSideView\(this, '(.*?)'/);
-            userid = userid && userid[1] ? userid[1] : null;
+            let userid = ($memberlink.attr('onclick')).match(/(showSideView|showSideViewNew)\(this, '(.*?)'/);
+            userid = userid && userid[2] ? userid[2] : null;
             if(in_array(userid, bugs_id)) {
                 const $comment = $(this).closest('.comment_title');
                 if($comment.length>0) {
