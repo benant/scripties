@@ -49,7 +49,7 @@
         xhttp.send(query_string); // 'fname=Henry&lname=Ford'
     }
 
-
+    let is_mobile = navigator.userAgent.match(/iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i) != null || navigator.userAgent.match(/LG|SAMSUNG|Samsung/) != null ? true : false;
     let bg_color = $('.saving_mode_button:eq(0)').text()=='다크모드' ? '#fff' : '#000';
     const hide_style = 'color: '+bg_color+' !important;background: '+bg_color+' !important';
     const show_style = 'color: auto;background: auto';
@@ -84,7 +84,8 @@
         // const eto_bugs_shared = JSON.parse(localStorage.getItem('eto_bugs_shared')||'[]');
         // const bugs_id = eto_bugs.concat(eto_bugs_shared);
         console.log('hide bugs_id:',bugs_id,', bugs_name:',bugs_name);
-        $('.member,.writer_text').each(function(){
+        let selector = is_mobile ? '.name,.member' : '.member,.writer_text';
+        $(selector).each(function(){
             // name check
             let username = $.trim($(this).text());
 
