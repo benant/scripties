@@ -57,6 +57,19 @@
     const storage_name = 'eto_bugs';
     const auto_click_nogood = false; // 자동 반대 클리
     
+    let bugs_id = [];
+    let bugs_name = [];
+    function get_bugs_name() { return bugs_name; }
+    function get_bugs_info() {
+        const eto_bugs = JSON.parse(localStorage.getItem(storage_name)||'[]');
+        // console.log('eto_bugs:', eto_bugs);
+        const eto_bugs_shared = JSON.parse(localStorage.getItem('eto_bugs_shared')||'[]');
+        bugs_id = eto_bugs.concat(eto_bugs_shared);
+        const eto_bugs_name = JSON.parse(localStorage.getItem('eto_bugs_name')||'[]');
+        bugs_name = eto_bugs_name;
+    }
+    get_bugs_info();
+
 
     function hide_bug_posts() {
         $('.bugs_post').removeClass('on').each(function(){
@@ -66,17 +79,27 @@
                 $(this).attr('style', show_style);
             }
         });
-        const eto_bugs = JSON.parse(localStorage.getItem(storage_name)||'[]');
+        // const eto_bugs = JSON.parse(localStorage.getItem(storage_name)||'[]');
         // console.log('eto_bugs:', eto_bugs);
-        const eto_bugs_shared = JSON.parse(localStorage.getItem('eto_bugs_shared')||'[]');
-        const bugs_id = eto_bugs.concat(eto_bugs_shared);
-        // console.log('bugs_id:',bugs_id);
+        // const eto_bugs_shared = JSON.parse(localStorage.getItem('eto_bugs_shared')||'[]');
+        // const bugs_id = eto_bugs.concat(eto_bugs_shared);
+        console.log('hide bugs_id:',bugs_id,', bugs_name:',bugs_name);
         $('.member').each(function(){
+            // name check
+            let username = $.trim($(this).text());
+
+            // id check
             let $memberlink = $(this).parent('a');
-            if(!$memberlink || !$memberlink.attr('onclick')) { return ; }
-            let userid = ($memberlink.attr('onclick')).match(/(showSideView|showSideViewNew)\(this, '(.*?)'/);
-            userid = userid && userid[2] ? userid[2] : null;
-            if(in_array(userid, bugs_id)) {
+            if(!$memberlink || !$memberlink.attr('onclick')) { 
+                userid = '';
+            } else {
+                let userid = ($memberlink.attr('onclick')).match(/(showSideView|showSideViewNew)\(this, '(.*?)'/);
+                userid = userid && userid[2] ? userid[2] : null;
+            }
+            bugs_name = get_bugs_name();
+            // console.log('----check-------', userid , bugs_id, in_array(userid, bugs_id) ,  username , bugs_name, in_array(username, bugs_name));
+            // if(userid && in_array(userid, bugs_id) || username && in_array(username, bugs_name)) {
+            if(username && in_array(username, bugs_name)) {
                 const $comment = $(this).closest('.comment_title');
                 if($comment.length>0) {
                     const $parent = $comment.parent();
@@ -223,7 +246,7 @@
         return false;
     });
 
-    // sync shared bugs id
+    // sync shared bugs id & bugs name
     function sync_shared_bugs_id() {
         const bugs_sync_time = localStorage.next_bugs_sync_time
         if(!bugs_sync_time || bugs_sync_time<(new Date().getTime()/1000)) {
@@ -241,7 +264,23 @@
                     }
                 }
             });
-            localStorage.setItem('next_bugs_sync_time', (new Date().getTime())/1000 + 60*60); // 1시간후 재확인
+
+            for(i in bugs_id) {
+                id = bugs_id[i];
+                url = 'https://www.etoland.co.kr/bbs/profile.php?mb_id='+id;
+                // jQuery.get('https://www.etoland.co.kr/bbs/profile.php?mb_id=c9530214', function(r){console.log(r.match(/\>회원별명 : (.*?)\</)[1]);})
+                remote_get(url, function(r){
+                    _name = r.match(/\>회원별명 : (.*?)\</)[1];
+                    if(_name) {
+                        bugs_name.push(_name);
+                        // console.log('bugs_name:', bugs_name)
+                        localStorage.setItem('eto_bugs_name', JSON.stringify(array_unique(bugs_name))); // 저장
+                    }
+                })
+            }
+
+            localStorage.setItem('next_bugs_sync_time', (new Date().getTime())/1000 + 60*10); // 10분 후 재확인
+
         }
     }
     sync_shared_bugs_id();
