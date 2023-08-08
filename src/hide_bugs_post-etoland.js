@@ -84,7 +84,7 @@
         // const eto_bugs_shared = JSON.parse(localStorage.getItem('eto_bugs_shared')||'[]');
         // const bugs_id = eto_bugs.concat(eto_bugs_shared);
         console.log('hide bugs_id:',bugs_id,', bugs_name:',bugs_name);
-        $('.member').each(function(){
+        $('.member,.writer_text').each(function(){
             // name check
             let username = $.trim($(this).text());
 
@@ -248,6 +248,7 @@
 
     // sync shared bugs id & bugs name
     function sync_shared_bugs_id() {
+        console.log('sync_shared_bugs_id start');
         const bugs_sync_time = localStorage.next_bugs_sync_time
         if(!bugs_sync_time || bugs_sync_time<(new Date().getTime()/1000)) {
             remote_get('https://cdn.jsdelivr.net/gh/benant/scripties@main/src/eto_bugs.json', function(r){
@@ -271,7 +272,7 @@
                 // jQuery.get('https://www.etoland.co.kr/bbs/profile.php?mb_id=c9530214', function(r){console.log(r.match(/\>회원별명 : (.*?)\</)[1]);})
                 remote_get(url, function(r){
                     _name = r.match(/\>회원별명 : (.*?)\</)[1];
-                    if(_name) {
+                    if(_name && !in_array(_name, bugs_name)) {
                         bugs_name.push(_name);
                         // console.log('bugs_name:', bugs_name)
                         localStorage.setItem('eto_bugs_name', JSON.stringify(array_unique(bugs_name))); // 저장
