@@ -5,20 +5,22 @@
  * Sorry Google but I want to see video sooner.
  * @param number s(seconds)
  */
-if(window.location.href.indexOf('www.youtube.com')>-1) {
-  var skip = function(s){
-    // skip
-      $('.ytp-ad-skip-button-text').click();
-    // 광고 영상 목록에서 제거
-      $('ytd-rich-item-renderer').each(function(){
-          console.log($(this).find('[role="status"]').text());
-          if(
-            $(this).find('[role="status"]').text() == '광고'
-            ) { 
-            $(this).remove(); 
-          }
-      });
-      setTimeout(skip, s*1000);
-  }
-  skip(0.1);
+if (window.location.href.indexOf('www.youtube.com') > -1) {
+	var skip = function (s) {
+		// skip
+		$('.ytp-ad-skip-button-text').click();
+		// 광고 영상 목록에서 제거
+		$('ytd-rich-item-renderer').each(function () {
+			if ($(this).find('[role="status"]').text() == '광고') { $(this).remove(); }
+		});
+		if (window.location.href.indexOf('www.youtube.com/watch?') > -1) {
+			// 캠페인 광고 제거
+			$('#companion').remove();
+			// 유사영상 쪽 광고 제거
+			$('ytd-ad-slot-renderer').remove();
+		}
+		// 재실행
+		setTimeout(skip, s * 1000);
+	}
+	skip(0.1);
 }
