@@ -5,7 +5,7 @@
  * Sorry Google but I want to see video sooner.
  * @param number s(seconds)
  */
-if (window.location.href.indexOf('www.youtube.com') > -1) {
+if(window.location.href.indexOf('www.youtube.com')>-1) {
 	var skip = function (s) {
 		// skip
 		$('.ytp-ad-skip-button-text').click();
@@ -14,6 +14,10 @@ if (window.location.href.indexOf('www.youtube.com') > -1) {
 			if ($(this).find('[role="status"]').text() == '광고') { $(this).remove(); }
 		});
 		if (window.location.href.indexOf('www.youtube.com/watch?') > -1) {
+          	// 채팅 패널 제거
+          	$('#chat-container').remove()
+          	// 패널 광고 제거
+          	$('#panels').remove()
 			// 캠페인 광고 제거
 			$('#companion').remove();
 			// 유사영상 쪽 광고 제거
