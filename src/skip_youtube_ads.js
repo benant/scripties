@@ -7,12 +7,14 @@
  */
 if(window.location.href.indexOf('www.youtube.com')>-1) {
 	var skip = function (s) {
+      //console.log('skip start. s: ', s);
 		// skip
 		$('.ytp-ad-skip-button-text').click();
 		// 광고 영상 목록에서 제거
 		$('ytd-rich-item-renderer').each(function () {
-			if ($(this).find('[role="status"]').text() == '광고') { $(this).remove(); }
+			if ( ['광고','스폰서'].includes($(this).find('[role="status"]').text()) ) { $(this).remove(); }
 		});
+      	$('#masthead-ad').remove();
 		if (window.location.href.indexOf('www.youtube.com/watch?') > -1) {
           	// 채팅 패널 제거
           	$('#chat-container').remove()
@@ -22,9 +24,15 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 			$('#companion').remove();
 			// 유사영상 쪽 광고 제거
 			$('ytd-ad-slot-renderer').remove();
+          	// go next
+          	//$('.ytp-autonav-endscreen-button-container .ytp-autonav-endscreen-upnext-play-button').trigger('click');
 		}
+      	// pause 광고 숨김
+      	$('.ytp-pause-overlay .ytp-button.ytp-collapse').click();
 		// 재실행
-		setTimeout(skip, s * 1000);
+		setTimeout(function(){
+          skip(s);
+        }, s * 1000);
 	}
 	skip(0.1);
 }
