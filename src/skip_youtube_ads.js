@@ -22,9 +22,11 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 			$('#companion').remove();
 			// 유사영상 쪽 광고 제거
 			$('ytd-ad-slot-renderer').remove();
+			// 보고 있니? Yes
+			$('#confirm-button > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill').click();
 		}
 		// 재실행
-		setTimeout(skip, s * 1000);
+		setTimeout(function(){skip(s);}, s * 1000);
 	}
 	skip(0.1);
 }
