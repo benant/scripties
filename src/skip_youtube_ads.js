@@ -26,13 +26,13 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 			$('ytd-ad-slot-renderer').remove();
           	// go next
           	//$('.ytp-autonav-endscreen-button-container .ytp-autonav-endscreen-upnext-play-button').trigger('click');
+			// 보고 있니? Yes
+			$('#confirm-button > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill').click();
 		}
       	// pause 광고 숨김
       	$('.ytp-pause-overlay .ytp-button.ytp-collapse').click();
 		// 재실행
-		setTimeout(function(){
-          skip(s);
-        }, s * 1000);
+		setTimeout(function(){skip(s);}, s * 1000);
 	}
 	skip(0.1);
 }
