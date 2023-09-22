@@ -7,7 +7,7 @@
  */
 if(window.location.href.indexOf('www.youtube.com')>-1) {
 	var skip = function (s) {
-      //console.log('skip start. s: ', s);
+      	//console.log('skip start. s: ', s);
 		// skip
 		$('.ytp-ad-skip-button-text').click();
 		// 광고 영상 목록에서 제거
