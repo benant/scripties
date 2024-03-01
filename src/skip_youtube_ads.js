@@ -18,8 +18,8 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 		});
       	$('#masthead-ad').remove();
 		if (window.location.href.indexOf('www.youtube.com/watch?') > -1) {
-          	// 채팅 패널 제거
-          	$('#chat-container').remove()
+          	// 채팅 패널 제거 - 사라짐. 일단 주석처리함. 전체화면도 안보여서 제거해야함.
+          	//$('#chat-container').remove()
           	// 패널 광고 제거
           	$('#panels').remove()
 			// 캠페인 광고 제거
