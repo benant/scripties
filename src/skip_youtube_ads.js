@@ -38,8 +38,8 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 			//$('.ytp-autonav-endscreen-button-container .ytp-autonav-endscreen-upnext-play-button').trigger('click');
 			// 보고 있니? Yes
 			$('#confirm-button > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill').click();
-			// chat-container 숨김
-			$('#chat-container').remove();
+			// chat-container 숨김. remove 하면 전체화면이 안보임.
+			$('#chat-container').hide(); 
 		}
 		// pause 광고 숨김
 		$('.ytp-pause-overlay .ytp-button.ytp-collapse').click();
