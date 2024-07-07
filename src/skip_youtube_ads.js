@@ -18,14 +18,22 @@
 if(window.location.href.indexOf('www.youtube.com')>-1) {
 	var skip = function (s) {
 		//console.log('skip start. s: ', s);
-		// skip
-		$('.ytp-ad-skip-button-text, .ytp-skip-ad-button').click();
 		// 광고 영상 목록에서 제거
 		$('ytd-rich-item-renderer').each(function () {
 		if ( ['광고','스폰서'].includes( $.trim($(this).find('ytd-badge-supported-renderer').text()) ) ) { $(this).remove(); }
 		});
 		$('#masthead-ad').remove();
 		if (window.location.href.indexOf('www.youtube.com/watch?') > -1) {
+			if($('.ytp-ad-skip-button-text, .ytp-skip-ad-button').length>0) {
+				// skip
+				$('.ytp-ad-skip-button-text, .ytp-skip-ad-button').click();
+			} else {
+				if($('#error-screen').is(':visible') || // 광고차단 쓰지말라는 팝업 보이면 리로드
+				   $('.ytp-ad-avatar-lockup-card').is(':visible') // skip 없는 광고 보이면 리로드
+				  ) {
+				  setTimeout(function(){window.location.href=window.location.href;}, 100);
+				}
+			}
 			// 채팅 패널 제거 - 사라짐. 일단 주석처리함. 전체화면도 안보여서 제거해야함.
 			//$('#chat-container').remove()
 			// 패널 광고 제거
@@ -39,7 +47,7 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 			// 보고 있니? Yes
 			$('#confirm-button > yt-button-shape > button > yt-touch-feedback-shape > div > div.yt-spec-touch-feedback-shape__fill').click();
 			// chat-container 숨김. remove 하면 전체화면이 안보임.
-			$('#chat-container').hide(); 
+			$('#chat-container').hide();
 		}
 		// pause 광고 숨김
 		$('.ytp-pause-overlay .ytp-button.ytp-collapse').click();
