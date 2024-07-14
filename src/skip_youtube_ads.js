@@ -16,6 +16,7 @@
  * @param number s(seconds)
  */
 if(window.location.href.indexOf('www.youtube.com')>-1) {
+	let first_exe = 1;
 	var skip = function (s) {
 		//console.log('skip start. s: ', s);
 		// 광고 영상 목록에서 제거
@@ -28,10 +29,23 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 				// skip
 				$('.ytp-ad-skip-button-text, .ytp-skip-ad-button').click();
 			} else {
+				if(first_exe>0) {
+					// 광고차단 쓰지말라는 팝업 보이면 리로드
+				  if($('#error-screen').is(':visible') ) {
+					setTimeout(function(){window.location.href=window.location.href;}, 1000);
+					return false;
+				  }
+					// skip 없는 광고 보이면 리로드
+				  if($('.ytp-ad-avatar-lockup-card').is(':visible') ) {
+					setTimeout(function(){window.location.href=window.location.href;}, 500);
+					return false;
+				  }
+				}
 				if($('#error-screen').is(':visible') || // 광고차단 쓰지말라는 팝업 보이면 리로드
 				   $('.ytp-ad-avatar-lockup-card').is(':visible') // skip 없는 광고 보이면 리로드
-				  ) {
+				) {
 				  setTimeout(function(){window.location.href=window.location.href;}, 100);
+				  return false;
 				}
 			}
 			// 채팅 패널 제거 - 사라짐. 일단 주석처리함. 전체화면도 안보여서 제거해야함.
@@ -53,6 +67,7 @@ if(window.location.href.indexOf('www.youtube.com')>-1) {
 		$('.ytp-pause-overlay .ytp-button.ytp-collapse').click();
 		// 재실행
 		setTimeout(function(){skip(s);}, s * 1000);
+		first_exe=0;
 	}
 	skip(0.1);
 }
