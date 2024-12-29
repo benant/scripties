@@ -48,9 +48,11 @@
 		if($q.val()!=_search_) { 
 			setTimeout(function(){window.location.href = search_url;}, Math.random()*3000);
 		} else {
-			const http_site_url = site_url.replace('https:', 'http:');
-			const https_site_url = site_url.replace('http:', 'https:');
-			let $link = $('a[href="'+http_site_url+'"], a[href="'+https_site_url+'"]');
+			const http_www_site_url = site_url.replace('https:', 'http:');
+			const https_www_site_url = site_url.replace('http:', 'https:');
+			const http_site_url = http_www_site_url.replace('www.', '');
+			const https_site_url = https_www_site_url.replace('www.', '');
+			let $link = $('a[href="'+http_www_site_url+'"], a[href="'+https_www_site_url+'"], a[href="'+http_site_url+'"], a[href="'+https_site_url+'"]');
 			if($link.length>0) {
 				re_search = false;
 				// alert('link found');
