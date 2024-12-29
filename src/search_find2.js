@@ -103,8 +103,7 @@
 		fn_search($('[name="query"]'), '.sp_ntotal a.api_more , a.btn_next', null, 'https://search.naver.com/search.naver?where=nexearch&sm=top_hty&fbm=1&ie=utf8&query='+_search_);
 	}
 	if(window.location.href.indexOf('daum.net')>-1) {
-		fn_search($('[name="q"]'), '#webWrapExtend a.expender.more, a.btn_next', null, 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_, _siteurl_.replace(/\/$/,'')); // search web
-		// fn_search($('[name="q"]'), '#siteWrapExtend a.expender.more, a.btn_next', null, 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_, _siteurl_.replace(/\/$/,'')); // search site
+		fn_search($('[name="q"]'), '#webWrapExtend a.expender.more, #twaColl .card_comp a.btn_more, .compo-paging .btn_next', null, 'https://search.daum.net/search?w=tot&DA=YZR&t__nil_searchbox=btn&sug=&sugo=&sq=&o=&q='+_search_, _siteurl_.replace(/\/$/,'')); // search web
 	}
 	if(window.location.href.indexOf('zum.com')>-1) {
 		fn_search($('.search_bar_inner input[type="text"], [name="query"]'), '#documentSc p.section_more a, a.next', null, 'https://search.zum.com/search.zum?method=uni&option=accu&rd=1&query='+_search_+'&qm=f_typing.top', _siteurl_.replace(/\/$/,''));
