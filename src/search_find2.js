@@ -93,6 +93,9 @@
 	if(window.location.href.indexOf('google.com')>-1) {
 		fn_search($('[name="q"]'), 'a#pnnext', '.GNJvt.ipz2Oe', '/search?q='+_search_);
 	}
+	if(window.location.href.indexOf('yandex.com')>-1) {
+		fn_search($('[name="text"]'), 'a.Pager-Item.Pager-Item_type_next', null, '/search/?text='+_search_);
+	}
 	if(window.location.href.indexOf('yahoo.com')>-1) {
 		fn_search($('[name="p"]'), 'a.next', null, 'https://search.yahoo.com/search?p='+_search_+'&fr=yfp-t&ei=UTF-8&fp=1');
 	}
